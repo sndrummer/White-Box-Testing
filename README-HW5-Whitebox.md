@@ -10,12 +10,12 @@ The following tests are found in the SetTests class file
     - Insert one item, size is now greater than zero, then call toArray(),
     hits every branch.
     
-2.  insert() Input Options for full branch coverage: 
+2.  insert(int x) Input Options for full branch coverage: 
     - Insert a high x and a low x (8 then 5)
     - new Set insert two equal values for x (0 and 0)
     - new Set, insert a low value of x and then a higher (0 then 1), now all branches are covered.
     
-3.  member() Input Options for full branch coverage: 
+3.  member(int x) Input Options for full branch coverage: 
     - An element of a is > than x (an element of a that is indexed before an element > x can't be equal to x)
     - An element of a is equal to x where a previously indexed element of a is not > x  
     - An element of a is less than x 
@@ -78,12 +78,53 @@ Additional documentation can be found in the SetTests class, and changes made in
         This was fixed by adding a boolean statement to the if statement to make sure the same values
         were not used for x and y.
         
-## 2. Additional MC/DC tests      
-      
-## Remember (for me)
-In software testing, the modified condition/decision coverage (MC/DC) is a code coverage criterion that requires all of the below during testing:
-       
-       1. Each entry and exit point is invoked
-       2. Each decision takes every possible outcome
-       3. Each condition in a decision takes every possible outcome
-       4. Each condition in a decision is shown to independently affect the outcome of the decision.
+## 2. Additional MC/DC tests 
+**Location**: towards the end of the SetTests class file starting after the comment `ADDITIONAL MC/DC TESTS`
+1. toArray():
+    - Call toArray from an empty Set, this will cover a unique path were the inside of the for loop 
+    is never hit 
+    
+2.  insert(int x):
+    - No additional tests required as all of the entry and exit points are already invoked,
+    as well as every possible outcome. 
+    
+3.  member(int x): 
+    - Every path has been taken here except for when Set is empty the inside of the for loop would be 
+    skipped so that is one that could be added. 
+    - To examine the independent effect of each branch, we could test a set of size one, and call member
+    three times with different values of x in order to hit every branch once and give us insight to the effects
+    of each branch independent of any other input or set state. (Refer to testMemberIndependentPaths in SetTests)
+
+4.  section(Set s):
+    - Test when only hitting one decision i.e. use a size of one with different sets to show how the 
+    sets independently affect the outcome, this should be 3 tests for the if, if-else, and else branches
+    
+5.  containsArithTriple():
+    - All of the paths/decisions have been tested. Perhaps a test that could be added is an empty set
+    calling containsArithTriple() since it would skip the nested for loops and therefore have a unique path
+    through the method that has not been tested yet.
+
+## 3. Additional Tests for Complexity Coverage -- Located at the end of the SetTests class file
+**Node**: no extra tests added reasoning given below
+1.  toArray():
+    - With the other tests we have exhausted all paths and decisions so there would be no benefit in examining any 
+    linearly independent paths in the toArray method. Running complexity coverage reports no missed complexity. 
+    
+2.  insert(int x):
+    - Because insert has fairly simple and abrupt paths/decisions that have all been tested,
+    there would be no reason to conceive of additional tests of its cyclomatic complexity. 
+    Running complexity coverage reports no missed complexity.
+
+3.  member(int x): 
+    - The tests for member also have no missed complexity. All paths/decisions were tested thoroughly.
+    
+4.  section(Set x):
+    - Section is a bit more complex than the others but we have missed no complexity by hitting all the 
+    branches as well as doing a condition analysis in further MC/DC tests. So nothing more can be done here
+    in terms of testing independent paths complexity. The tests done in MC/DC may actually qualify as 
+    cyclomatic complexity tests as well given we are taking each independent path. 
+
+5.  containsArithTriple():
+    - Despite the nested for loops of this method, the complexity is quite easy to analyze given that
+    it only has one path to true and one to false. We have exhausted all the possible decisions here as 
+    well so more complexity tests would be useless. Running complexity coverage reports no missed complexity. 

@@ -154,7 +154,6 @@ public class SetTests {
     }
 
 
-
     /**
      * Tests that the insert method works correctly.
      * It appears that Set is trying to sort things on insert by having smaller values come first,
@@ -373,9 +372,109 @@ public class SetTests {
         assertFalse(set3.containsArithTriple());
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-    //ADDITIONAL MC/DC TESTS
+
+    /*
+                ADDITIONAL MC/DC TESTS
+            -------------------------------
+    In software testing, the modified condition/decision coverage (MC/DC) is a code coverage criterion
+    that requires all of the below during testing:
 
 
+       1. Each entry and exit point is invoked
+       2. Each decision takes every possible outcome
+       3. Each condition in a decision takes every possible outcome
+       4. Each condition in a decision is shown to independently affect the outcome of the decision.
+     */
+
+    /**
+     * Additional MC/DC Tests for toArray
+     * Call toArray from an empty Set, this will cover a unique path were the inside of the for loop
+     * is never hit.
+     */
+    @Test
+    @DisplayName("Test toArray MCDC")
+    public void testToArrayMCDC() {
+        // call toArray on an empty testSet
+        testSet.toArray();
+    }
+
+    /**
+     * Additional MC/DC Tests for member
+     * Test when calling member on an empty Set
+     */
+    @Test
+    @DisplayName("Test member Set Empty")
+    public void testMemberSetEmpty() {
+        testSet.member(5);
+    }
+
+    /**
+     * Test when calling member on an empty Set
+     */
+    @Test
+    @DisplayName("Test member Independent Paths")
+    public void testMemberIndependentPaths() {
+        testSet.insert(1);
+
+        //Branch 1
+        testSet.member(0);
+
+        //Branch 2
+        testSet.member(1);
+
+        //Branch 3
+        testSet.member(3);
+    }
+
+    /**
+     * Test the effect of only hitting branch 1 (if branch) in the section method
+     */
+    @Test
+    @DisplayName("Test Section MCDC Hit Branch 1 - IF")
+    public void testSectionMCDCBranch1() {
+
+        Set set2 = new Set();
+        //hit branch 1
+        testSet.insert(0);
+        set2.insert(0);
+        testSet.section(set2);
+
+    }
+
+    /**
+     * Test the effect of only hitting branch 2 (else-if branch) in the section method
+     */
+    @Test
+    @DisplayName("Test Section MCDC Hit Branch 2 - ELSE-IF")
+    public void testSectionMCDCBranch2() {
+        Set set2 = new Set();
+        //hit branch 2
+        testSet.insert(2);
+        set2.insert(3);
+        testSet.section(set2);
+    }
+
+    /**
+     * Test the effect of only hitting branch 3 (else branch) in the section method
+     */
+    @Test
+    @DisplayName("Test Section MCDC Hit Branch 3 - ELSE")
+    public void testSectionMCDCBranch3() {
+        Set set2 = new Set();
+        //hit branch 2
+        testSet.insert(5);
+        set2.insert(3);
+        testSet.section(set2);
+    }
+
+    /**
+     * Test when an empty Set calls containsArithTriple()
+     */
+    @Test
+    @DisplayName("Test containsArithTriple MCDC")
+    public void testArithTripleMCDC() {
+        testSet.containsArithTriple();
+    }
 
 
 }
