@@ -1,8 +1,9 @@
 # Whitebox Testing HW:
 
-# 1. Test Set Methods 
-For the first three methods, I was able to achieve full branch coverage using the test input shown below.
+# 1. Test Set Methods
 
+### Coverage 
+The following tests are found in the SetTests class file
 **Note- As these coverage tests were written, bugs were discovered using the tests discussed in [Whitebox Tests for functionality](#whitebox-tests-for-functionality) "Whitebox Tests for functionality" section below**
 
 1. toArray() Input Options for full branch coverage:
@@ -19,6 +20,19 @@ For the first three methods, I was able to achieve full branch coverage using th
     - An element of a is equal to x where a previously indexed element of a is not > x  
     - An element of a is less than x 
     
+4.  section() Input Options for full branch coverage:
+    - Call section on from an empty set with another set as input, this covers the false branch of
+     i < a.size
+    - Create two sets where set1 contains 0,1,6 and set2 contains 0,2,4. Call set1.section(set2), this
+    covers `a.get(i).equals(s.a.get(j)` both true and false. Also hits `else if (a.get(i) < s.a.get(j))`
+    Running this test with coverage confirms that all branches are covered.
+    
+5.  containsArithTriple() Input Options for full branch coverage:
+    - Create a set that contains an arithTriple and call containsArithTriple()
+    - Create a set that does not contain an arithTriple and call containsArithTriple()
+    These two sets should achieve full coverage and running a junit test with coverage confirms
+    that all branches are hit with these two sets calling containsArithTriple().   
+
 ### Whitebox Tests for functionality
 To uncover some of the bugs with the Set class I wrote the following tests and fixed the bugs. 
 Additional documentation can be found in the SetTests class, and changes made in the Set class.
@@ -57,15 +71,15 @@ Additional documentation can be found in the SetTests class, and changes made in
     1. I created a test to see if containsArithTriple was working. I created sets of three numbers 
     and inserted arithTriples into the first two
      (1,2,3) and (1,3,5) and then one that that was not an arithTriple (5,7,1). 
-        - **Bugs Discovered and Fixed:** This test revealed that the problem with this method was that 
-        it would incorrectly return true because 
-        it would iterate over the same elements and have no checks on what is going as input into the member method.
-        In other words, it failed to make sure x,y, and z were all unique values from the set. Before
-        correcting it, it would check if plugging in the same values produced an arithTriple.
-      
+        - **Bugs Discovered and Fixed:** This test revealed that the problem with this method was 
+        that it would incorrectly return true because it would iterate over the same elements and have no checks 
+        on what is going as input into the member method. In other words, it failed to make sure x,y, and z were all unique values from the set.
+        Before correcting it, it would check if plugging in the same values produced an arithTriple. 
+        This was fixed by adding a boolean statement to the if statement to make sure the same values
+        were not used for x and y.
+        
 ## 2. Additional MC/DC tests      
       
-        
 ## Remember (for me)
 In software testing, the modified condition/decision coverage (MC/DC) is a code coverage criterion that requires all of the below during testing:
        

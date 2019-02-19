@@ -108,11 +108,11 @@ public class SetTests {
 
         testSet.insert(0);
         testSet.insert(1);
-        testSet.insert(3);
+        testSet.insert(6);
 
         set2.insert(0);
-        set2.insert(1);
-        set2.insert(1);
+        set2.insert(2);
+        set2.insert(4);
 
 
         testSet.section(set2);
@@ -121,6 +121,38 @@ public class SetTests {
         log.debug("testSet: {}", testSet.toArray());
 
     }
+
+    /**
+     * Tests branch coverage of arithTripleCoverage using a set that contains an arithTriple and one
+     * that does not
+     */
+    @Test
+    @DisplayName("Test containsArithTriple Coverage")
+    public void testArithTripleCoverage() {
+
+        //testSet contains an arithTriple, should return true
+        int x = 1;
+        int y = 2;
+        int z = 3;
+        testSet.insert(x);
+        testSet.insert(y);
+        testSet.insert(z);
+
+        assertTrue(testSet.containsArithTriple());
+
+        //Set2 does not contain an arithTriple, should return false
+        Set set2 = new Set();
+        x = 5;
+        y = 7;
+        z = 1;
+        set2.insert(x);
+        set2.insert(y);
+        set2.insert(z);
+
+        assertFalse(set2.containsArithTriple());
+
+    }
+
 
 
     /**
@@ -302,7 +334,9 @@ public class SetTests {
      * that it would incorrectly return true because it would iterate over the same elements and have no checks
      * on what is going as input into the member method.
      * In other words, it failed to make sure x,y, and z were all unique values from the set. Before
-     * correcting it, it would check if plugging in the same values produced an arithTriple.
+     * correcting it, it would check if plugging in the same values produced an arithTriple. This was
+     * fixed by adding a boolean statement to the if statement to make sure the same values
+     * were not used for x and y.
      */
     @Test
     @DisplayName("Test ArithTriple Functionality")
@@ -338,7 +372,7 @@ public class SetTests {
 
         assertFalse(set3.containsArithTriple());
     }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////
     //ADDITIONAL MC/DC TESTS
 
 

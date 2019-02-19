@@ -80,6 +80,7 @@ public class Set {
      */
     public void section(Set s) {
         for (int i = 0, j = 0; i < a.size() && j < s.a.size(); ) {
+            log.info("a.get(i): {}\ns.a.get(j): {}", a.get(i), s.a.get(j));
             if (a.get(i).equals(s.a.get(j))) {
                 a.remove(i);
                 j++;
@@ -104,13 +105,9 @@ public class Set {
     public boolean containsArithTriple() {
         for (int i = 0; i < a.size(); i++) {
             for (int j = 0; j <= i; j++) {
-                if (!a.get(i).equals(a.get(j))) {
-                    int y = a.get(i);
-                    int x = a.get(j);
-                    int z = (2 * y) - x;
-                    if (z != x && z != y && member(z)) {
-                        return true;
-                    }
+                if (!a.get(i).equals(a.get(j)) &&
+                        member((2 * a.get(i)) - a.get(j))) {
+                    return true;
                 }
             }
         }
