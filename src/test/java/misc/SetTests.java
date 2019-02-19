@@ -260,9 +260,9 @@ public class SetTests {
      * Tests that section method removes from the set any element that is equal to an element in s.
      * <p>
      * <b>Bugs Discovered and Fixed</b>: There was a bug with the iteration through the set values
-     * after a remove --> removed `i++;` after the `a.remove(i)` because it did not take into account
+     * after a.remove. To fix this I removed `i++;` after the `a.remove(i)` because it did not take into account
      * that by removing the ith element of a, it was effectively iterating to the next element of a anyway,
-     * so i++; was not necessary.
+     * so `i++;` was causing problems.
      */
     @Test
     @DisplayName("Test Section Functionality")
@@ -337,8 +337,11 @@ public class SetTests {
         set3.insert(z);
 
         assertFalse(set3.containsArithTriple());
-
     }
+
+    //ADDITIONAL MC/DC TESTS
+
+
 
 
 }
