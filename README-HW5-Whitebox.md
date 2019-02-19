@@ -1,19 +1,53 @@
 # Whitebox Testing HW:
-## 1. Test Set Methods
-- toArray() Input Options for full branch coverage:
-    1. Size of a is zero, does not hit for loop
-    2. Size of a > zero, hits every line 
+## Remember (for me)
+In software testing, the modified condition/decision coverage (MC/DC) is a code coverage criterion that requires all of the below during testing:
+
+    1. Each entry and exit point is invoked
+    2. Each decision takes every possible outcome
+    3. Each condition in a decision takes every possible outcome
+    4. Each condition in a decision is shown to independently affect the outcome of the decision.
+## 1. Test Set Methods 
+For the first three methods, I was able to achieve full branch coverage using the test input shown below.
+
+**Note- As these coverage tests were written, bugs were discovered using the tests discussed in [Whitebox Tests for functionality](#whitebox-tests-for-functionality) "Whitebox Tests for functionality" section below**
+
+1. toArray() Input Options for full branch coverage:
+    - Insert one item, size is now greater than zero, then call toArray(),
+    hits every branch.
     
-- insert() Input Options for full branch coverage: 
-    1. Size of a is > x hits hits first if
-    2. Size of a is < x hits else statement
-    3. Size of a is zero, skips statements
+2.  insert() Input Options for full branch coverage: 
+    - Insert a high x and a low x (8 then 5)
+    - new Set insert two equal values for x (0 and 0)
+    - new Set, insert a low value of x and then a higher (0 then 1), now all branches are covered.
     
-- member() Input Options for full branch coverage: 
-    1. An element of a is > than x (an element of a that is indexed before an element > x can't be equal to x) 
-    possibly a bug? Why is there no documentation? It should only be a bug if there was actually documentation describing what it is supposed to do. Even 'member' should probably be isMember
-    2. An element of a is equal to x where a previously indexed element of a is not > x  
-    3. Size of a is zero, should return false
+3.  member() Input Options for full branch coverage: 
+    - An element of a is > than x (an element of a that is indexed before an element > x can't be equal to x)
+    - An element of a is equal to x where a previously indexed element of a is not > x  
+    - An element of a is less than x 
     
-- section() Input Options for full branch coverage: 
-    1. 
+### Whitebox Tests for functionality
+To uncover some of the bugs with the Set class I wrote the following tests and fixed the bugs. 
+Additional documentation can be found in the SetTests class, and changes made in the Set class.
+1. **Testing insert()**: 
+    1. To test the functionality of insert, I created a test which asserts only one 
+    value is inserted each time and compares the set values to a `java.util.Set` with the same input. 
+    Order is not tested since toArray needs to be tested to determine if order is working. 
+        - **Bugs Discovered and Fixed:** Pre-corrected Set class did not have correct set insert behavior.
+         Certain values were being added twice because a break statement was used 
+         rather than a return to prevent this.
+    2. Next I created a test that assured that insert will not insert values already contained int the set.
+         - **Bugs Discovered and Fixed:** NONE
+         
+2. **Testing toArray()**: 
+    1. In order to make sure that all subsequent methods in the Set class were working as they should, 
+    I first had to determine if the toArray method was working. Since this is a whitebox test, we can use 
+    our knowledge of the Set class implementation to test functionality. In this case we compare the array resulting from inserting 3,1, then 2
+    to the elements of an ArrayList<Integer> with the same sorted values (1,2,3). 
+
+3. **Testing member()**: 
+    1. To determine if the `member()` method was working correctly I created a test to determine 
+    to test that it functions by checking whether an int element is a member of the set or not.
+        - **Bugs Discovered and Fixed:** No problems were found although the `else { if()}` was changed
+         to `else if()` for readability. 
+         
+4. **Testing section()**: 
